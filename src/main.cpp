@@ -27,11 +27,11 @@ int main(void) {
 
 void MainLoop() {
     Vector2 mousePos = GetMousePosition();
-    if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON) && IsKeyDown(KEY_LEFT_SHIFT)) {
+    if (IsKeyPressed(KEY_LEFT_SHIFT)) {
         _objectContainer.AddObjectToNearestEdge(mousePos);
     }
 
-    if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON) && IsKeyDown(KEY_LEFT_CONTROL)) {
+    if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
         _objectContainer.AddObject(mousePos);
     }
 

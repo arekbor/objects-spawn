@@ -20,7 +20,7 @@ class Container {
                 int GetId();
                 Vector2 GetPos();
                 void DrawObject();
-                static bool IsWithinBounds(Vector2 pos, Vector2 objectPos, int objectSize);
+                static bool IsWithinBounds(Vector2 pos, Vector2 areaPos, int areaSize);
         };
         void AddObject(Vector2 pos);
         void AddObjectToNearestEdge(Vector2 pos);

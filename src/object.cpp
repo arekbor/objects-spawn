@@ -18,14 +18,9 @@ Vector2 Container::Object::GetPos() {
     return this->pos;
 }
 
-// bool Container::Object::IsWithinBounds(Vector2 pos) {
-//     return pos.x > this->pos.x && pos.x < (this->pos.x + OBJECT_SIZE) &&
-//         pos.y > this->pos.y && pos.y < (this->pos.y + OBJECT_SIZE);
-// }
-//this method not working on bottom every object, fix this!
-bool Container::Object::IsWithinBounds(Vector2 pos, Vector2 objectPos, int objectSize) {
-    return pos.x > objectPos.x && pos.x < (objectPos.x + objectSize) && 
-        pos.y > objectPos.y && objectPos.y < (objectPos.y + objectSize);
+bool Container::Object::IsWithinBounds(Vector2 pos, Vector2 areaPos, int areaSize) {
+    return pos.x > areaPos.x && pos.x < (areaPos.x + areaSize) && 
+        pos.y > areaPos.y && pos.y < (areaPos.y + areaSize);
 }
 
 void Container::AddObject(Vector2 pos) {
@@ -44,17 +39,25 @@ void Container::RemoveObject(Vector2 pos) {
 void Container::DrawAllObjects() {
     for(std::list<Object>::iterator i = this->objects.begin(); i != this->objects.end(); i++) {
         i->DrawObject();
+        DrawRectangleLines(i->GetPos().x, i->GetPos().y, OBJECT_SIZE, OBJECT_SIZE, GRAY);
     }
 }
 
 void Container::AddObjectToNearestEdge(Vector2 pos) {
+    const Vector2 offsets[] = {
+        { 0, -OBJECT_SIZE },
+        { 0, OBJECT_SIZE },
+        { -OBJECT_SIZE, 0 },
+        { OBJECT_SIZE, 0 }
+    };
+
     for(std::list<Object>::iterator i = this->objects.begin(); i != this->objects.end(); i++) {
-        Vector2 topOffset = Vector2Add(i->GetPos(), (Vector2){ 0, -OBJECT_SIZE });
-        Vector2 downOffset = Vector2Add(i->GetPos(), (Vector2){ 0, OBJECT_SIZE });
-        Vector2 leftOffset = Vector2Add(i->GetPos(), (Vector2){ -OBJECT_SIZE, 0 });
-        Vector2 rightOffset = Vector2Add(i->GetPos(), (Vector2){ OBJECT_SIZE, 0 });
-
-
-        //DrawRectangleLines(topOffset.x, topOffset.y, OBJECT_SIZE, OBJECT_SIZE, RED);
+        for(Vector2 offset : offsets) {
+            Vector2 objPos = Vector2Add(i->GetPos(), offset);
+            if (Container::Object::IsWithinBounds(pos, objPos, OBJECT_SIZE)) {
+                this->AddObject(objPos);
+                return;
+            }
+        }
     }
 }

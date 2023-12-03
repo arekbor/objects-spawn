@@ -28,10 +28,12 @@ void Container::AddObject(Vector2 pos) {
 }
 
 void Container::RemoveObject(Vector2 pos) {
-    for(std::list<Object>::iterator i = this->objects.begin(); i != this->objects.end(); i++) {
+    for (std::list<Object>::iterator i = this->objects.begin(); i != this->objects.end(); ) {
         if (Container::Object::IsWithinBounds(pos, i->GetPos(), OBJECT_SIZE)) {
-            this->objects.erase(i);
-            break;
+            TraceLog(LOG_INFO, TextFormat("ID: %d", i->GetId()));
+            i = this->objects.erase(i);
+        } else {
+            i++;
         }
     }
 }
@@ -40,6 +42,7 @@ void Container::DrawAllObjects() {
     for(std::list<Object>::iterator i = this->objects.begin(); i != this->objects.end(); i++) {
         i->DrawObject();
         DrawRectangleLines(i->GetPos().x, i->GetPos().y, OBJECT_SIZE, OBJECT_SIZE, GRAY);
+        DrawText(TextFormat("id: %d", i->GetId()), i->GetPos().x, i->GetPos().y, 8, RED);
     }
 }
 

@@ -27,15 +27,15 @@ int main(void) {
 
 void MainLoop() {
     Vector2 mousePos = GetMousePosition();
-    if (IsKeyPressed(KEY_LEFT_SHIFT)) {
-        _container.AddObjectToNearestEdge(mousePos);
-    }
-
-    if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
+    if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON) && !IsKeyDown(KEY_LEFT_SHIFT)) {
         _container.AddObject(mousePos);
     }
 
-    if (IsMouseButtonPressed(MOUSE_BUTTON_RIGHT) && IsKeyDown(KEY_DELETE)) {
+    if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON) && IsKeyDown(KEY_LEFT_SHIFT)) {
+        _container.AddObjectToNearestEdge(mousePos);
+    }
+
+    if (IsMouseButtonPressed(MOUSE_BUTTON_RIGHT)) {
         _container.RemoveObject(mousePos);
     }
 

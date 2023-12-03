@@ -30,7 +30,6 @@ void Container::AddObject(Vector2 pos) {
 void Container::RemoveObject(Vector2 pos) {
     for (std::list<Object>::iterator i = this->objects.begin(); i != this->objects.end(); ) {
         if (Container::Object::IsWithinBounds(pos, i->GetPos(), OBJECT_SIZE)) {
-            TraceLog(LOG_INFO, TextFormat("ID: %d", i->GetId()));
             i = this->objects.erase(i);
         } else {
             i++;

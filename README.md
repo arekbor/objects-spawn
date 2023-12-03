@@ -1,4 +1,4 @@
-# objects-spawn
+# objects-spawner
 
 - To run this project you need raylib.
 - Type "make" cmd to run window with the project.
